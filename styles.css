@@ -1,0 +1,128 @@
+:root{
+  --bg:#FFF8F0;
+  --accent:#6B4F3A;
+  --muted:#A27B63;
+  --paper:#FFFDF8;
+  --soft-shadow: 0 12px 30px rgba(99,72,59,0.12);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Merriweather', Georgia, serif;
+  background:linear-gradient(180deg,var(--bg),#FEF7EE);
+  color:var(--accent);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.scene{width:100%;max-width:760px;height:420px;position:relative}
+.paper-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.paper-plane{width:86px;height:86px;color:var(--muted);cursor:pointer;filter:drop-shadow(var(--soft-shadow));transform-origin:center center}
+
+/* flight animation */
+.paper-plane{width:86px;height:86px;transform:translate(-220px,-120px) rotate(-12deg);animation:flyIn 1500ms cubic-bezier(.18,.9,.26,1) forwards}
+@keyframes flyIn{
+  0%{transform:translate(-240px,-160px) scale(.9) rotate(-6deg);opacity:0}
+  60%{opacity:1}
+  100%{transform:translate(0,0) scale(1) rotate(-6deg)}
+}
+
+.paper-wrap.landed .paper-plane{animation:none;transform:translate(0,0) rotate(-6deg)}
+.paper-plane:active{transform:scale(.98)}
+
+/* playful glow & hover tilt */
+.paper-plane{transition:transform 220ms ease, filter 300ms ease}
+.paper-plane:hover{transform:translate(0,-6px) rotate(-2deg) scale(1.02);filter:drop-shadow(0 18px 30px rgba(255,170,120,0.12))}
+
+/* motion trail */
+.trail{position:absolute;left:50%;top:50%;width:220px;height:60px;transform:translate(-60px,-60px) rotate(-8deg);pointer-events:none;background:linear-gradient(90deg, rgba(255,180,115,0.25), rgba(255,220,180,0.06));border-radius:30px;filter:blur(10px);opacity:0;transition:opacity 280ms ease}
+.paper-wrap.landed .trail{opacity:1;animation:trailFloat 2000ms ease-in-out infinite}
+@keyframes trailFloat{0%{transform:translate(-60px,-60px) rotate(-8deg) scaleX(.92)}50%{transform:translate(-60px,-70px) rotate(-6deg) scaleX(1.04)}100%{transform:translate(-60px,-60px) rotate(-8deg) scaleX(.92)}}
+
+/* confetti */
+.confetti{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:visible;z-index:999}
+.confetti-piece{position:absolute;width:10px;height:16px;border-radius:2px;opacity:0.95;transform-origin:center;will-change:transform,opacity}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0) translateX(0) scale(1);opacity:1}100%{transform:translateY(110vh) rotate(720deg) translateX(60px) scale(.9);opacity:0}}
+
+/* subtle paper shimmer when opening */
+.envelope.unfold .letter-content::after{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0));mix-blend-mode:soft-light;pointer-events:none;animation:shimmer 1200ms linear}
+@keyframes shimmer{0%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
+
+/* plane preview */
+.plane-preview{position:absolute;left:50%;top:50%;transform:translate(14px,-6px) scale(.85);pointer-events:none;opacity:0;transition:opacity 260ms ease,transform 260ms ease;z-index:30}
+.plane-preview .preview-inner{background:linear-gradient(180deg,#FFF8F4,#FFF4EE);padding:8px 10px;border-radius:10px;box-shadow:0 8px 24px rgba(99,72,59,0.08);font-family:'Patrick Hand',cursive;color:#5b3a2a;max-width:160px}
+.plane-preview.show{opacity:1;transform:translate(12px,-12px) scale(1)}
+.preview-text{margin:0;font-size:.92rem}
+
+/* approach scaling for plane */
+.plane-approach .paper-plane{transition:transform 420ms cubic-bezier(.2,.9,.28,1)}
+
+
+/* Loading overlay */
+.loading{position:fixed;inset:0;background:linear-gradient(180deg,rgba(255,250,245,0.98),rgba(255,250,245,0.96));display:flex;align-items:center;justify-content:center;z-index:1200;transition:opacity 360ms ease,transform 360ms ease}
+.loading.hidden{opacity:0;pointer-events:none;transform:scale(.995)}
+.loading-inner{display:flex;align-items:center;gap:14px;padding:22px 26px;border-radius:16px;background:linear-gradient(180deg,#FFF,#FFF6F0);box-shadow:0 20px 50px rgba(99,72,59,0.12)}
+.loading-plane{width:54px;height:54px;transform:translateX(-6px);animation:loadingWiggle 1200ms ease-in-out infinite}
+.loading-text strong{display:block;font-size:1.05rem;color:var(--accent)}
+.loading-text span{display:block;font-size:0.9rem;color:var(--muted)}
+@keyframes loadingWiggle{0%{transform:translateX(-6px) rotate(-6deg)}50%{transform:translateX(2px) rotate(2deg)}100%{transform:translateX(-6px) rotate(-6deg)}}
+
+
+.envelope{position:absolute;width:320px;height:220px;border-radius:12px;background:var(--paper);box-shadow:var(--soft-shadow);top:50%;transform:translateY(30px) scale(.95);opacity:0;transition:all 420ms cubic-bezier(.2,.9,.28,1);pointer-events:none}
+.paper-wrap.landed .envelope{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.envelope-flap{position:absolute;inset:0;border-radius:12px;background:linear-gradient(180deg,#fff,#FEF8F3);clip-path:polygon(0 0,100% 0,50% 46%);transform-origin:top center;transition:transform 420ms cubic-bezier(.2,.9,.28,1)}
+
+.envelope.unfold .envelope-flap{transform:translateY(-44%) rotateX(46deg)}
+.letter-sheet{position:absolute;left:14px;right:14px;top:34px;bottom:14px;background:transparent;overflow:hidden}
+.letter-content{background:transparent;padding:18px;opacity:0;transform:translateY(8px) scale(.995);transition:all 520ms cubic-bezier(.2,.9,.28,1);border-radius:10px}
+.envelope.unfold .letter-content{opacity:1;transform:translateY(0) scale(1)}
+
+.msg{font-size:1.05rem;line-height:1.5;margin:0 0 .9rem;color:#4b2f24}
+.meta{font-size:.86rem;color:var(--muted);margin:0}
+.new-letter{margin-top:12px;padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,#F2E9E1,#FFF7F3);color:var(--accent);cursor:pointer}
+
+/* letter styling */
+.letter-content{background:url('') var(--paper);padding:22px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
+.letter-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.stamp{font-size:20px;background:linear-gradient(90deg,#FFD9C7,#FFEFD9);padding:8px;border-radius:8px;box-shadow:0 6px 18px rgba(99,72,59,0.08)}
+.title{font-family:'Patrick Hand', 'Patrick Hand SC', cursive;color:#5a3b2e}
+.who-sent{margin-top:12px}
+.who-sent h4{font-family:'Patrick Hand',cursive;margin:0 0 6px;font-size:1rem}
+.who-list{list-style:none;padding:0;margin:0;color:var(--muted);font-size:.92rem}
+.who-list li{margin:6px 0}
+.actions{display:flex;gap:10px;margin-top:12px}
+.actions button{padding:9px 12px;border-radius:10px;border:0;background:#FFF6F2;color:var(--accent);cursor:pointer}
+.actions .keep{background:linear-gradient(90deg,#FFF4E6,#FFFAF6);box-shadow:0 6px 18px rgba(107,79,58,0.06)}
+.actions .send-back{background:linear-gradient(90deg,#FFEFEF,#FFF6F9)}
+
+/* intro overlay */
+.intro{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(255,252,249,0.98),rgba(255,250,245,0.96));z-index:1400}
+.intro-inner{max-width:680px;padding:28px 30px;border-radius:16px;background:linear-gradient(180deg,#FFF,#FFF7F2);box-shadow:0 30px 80px rgba(99,72,59,0.12);text-align:center}
+.intro h1{font-family:'Patrick Hand',cursive;margin:0 0 8px;font-size:1.6rem;color:var(--accent)}
+.intro p{margin:0 0 18px;color:var(--muted)}
+.let-land{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,#FFD6A5,#FFB4A2);border:0;font-family:'Patrick Hand',cursive;font-size:1rem;cursor:pointer}
+
+/* small caught hint */
+.caught-hint{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#FFF6EE,#FFF9F6);padding:8px 12px;border-radius:12px;box-shadow:0 12px 30px rgba(99,72,59,0.08);opacity:0;transition:opacity 240ms}
+.caught-hint.show{opacity:1}
+
+
+/* responsive adjustments */
+@media (max-width:520px){
+  .scene{height:360px}
+  .envelope{width:86%;height:56%;left:7%;right:7%}
+  .paper-plane{width:64px;height:64px}
+  .msg{font-size:1rem}
+}
+
+/* subtle idle motion once landed */
+.paper-wrap.landed .paper-plane{animation:idle 3500ms ease-in-out infinite}
+@keyframes idle{0%{transform:translate(0,0) rotate(-6deg)}50%{transform:translate(0,-6px) rotate(-4deg)}100%{transform:translate(0,0) rotate(-6deg)}}
+
+/* accessibility focus */
+.paper-plane:focus{outline:3px solid rgba(107,79,58,.12);outline-offset:6px}
+
+/* small fade for scene */
+.scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 20%, rgba(255,255,255,0.6), transparent 35%)}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A Letter From a Stranger</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="stage">
+    <div class="scene">
+      <div class="paper-wrap">
+        <svg class="paper-plane" viewBox="0 0 48 48" aria-hidden="true" role="img" aria-label="Paper airplane">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0%" stop-color="#FFFBF6" />
+              <stop offset="100%" stop-color="#FFEFD9" />
+            </linearGradient>
+            <linearGradient id="g2" x1="0" x2="1">
+              <stop offset="0%" stop-color="#FFD6A5" />
+              <stop offset="100%" stop-color="#FFB4A2" />
+            </linearGradient>
+          </defs>
+          <path d="M4 44L44 24 4 18l10 8-10 12z" fill="url(#g1)" stroke="#E9A77E" stroke-width="1"/>
+          <path d="M14 26l30-6-8 8-22-2z" fill="url(#g2)" opacity="0.9"/>
+        </svg>
+        <div class="plane-preview" aria-hidden="true">
+          <div class="preview-inner">
+            <p class="preview-text">A folded hello…</p>
+          </div>
+        </div>
+        <div class="trail" aria-hidden="true"></div>
+
+        <div class="envelope" aria-hidden="true">
+          <div class="envelope-flap"></div>
+          <div class="letter-sheet">
+            <div class="letter-content">
+              <div class="letter-header">
+                <div class="stamp">✉️</div>
+                <div class="title">A Letter From a Stranger</div>
+              </div>
+              <p class="msg" aria-live="polite"></p>
+              <p class="meta"><span class="sender"></span> · <span class="date"></span> · <span class="location"></span></p>
+
+              <section class="who-sent">
+                <h4>Who sent this?</h4>
+                <ul class="who-list"></ul>
+              </section>
+
+              <div class="actions">
+                <button class="keep">Keep This Letter</button>
+                <button class="send-back">Send It Back ✉️</button>
+                <button class="new-letter">Catch Another One</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="confetti" aria-hidden="true"></div>
+
+  <div class="loading" id="loadingOverlay" role="status" aria-live="polite">
+    <div class="loading-inner">
+      <svg class="loading-plane" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M4 44L44 24 4 18l10 8-10 12z" fill="#FFF5EA" stroke="#E9A77E" stroke-width="1"/>
+      </svg>
+      <div class="loading-text">
+        <strong>Warming the postbox</strong>
+        <span>Preparing a letter from a stranger…</span>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
