@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7dbaf7">
+  <title>CASTLE DASH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topline"><a class="wordmark" href="/">CASTLE <b>DASH</b></a><button id="muteButton" class="mute" aria-label="Mute sound">♪</button></header>
+    <section id="home" class="screen home">
+      <div class="title-wrap"><div class="pixel-sun" aria-hidden="true"><i>•</i><i>•</i><b>⌣</b></div><p class="eyebrow">A 7-player co-op adventure</p><h1>CASTLE<br><span>DASH</span></h1><p class="intro">Seven clues. Three paths.<br>One very confused signpost.</p></div>
+      <div class="hero-scene"><canvas id="heroCanvas" aria-label="Pixel castle on a hill"></canvas><div class="hero-party" id="heroParty"></div></div>
+      <div class="entry-panel">
+        <label class="field-label" for="playerName">YOUR NAME</label><input id="playerName" maxlength="14" placeholder="Moss" autocomplete="nickname">
+        <div class="character-picker"><span class="field-label">PICK A PAL</span><div id="characterPicker" class="characters"></div></div>
+        <div class="home-actions"><button id="createButton" class="pixel-button primary">MAKE A ROOM</button><button id="joinButton" class="pixel-button">JOIN CODE</button><button id="testButton" class="pixel-button test">TEST MODE</button></div>
+        <div id="joinForm" class="join-form hidden"><input id="roomCode" maxlength="4" placeholder="4-LETTER CODE" aria-label="Room code"><button id="submitJoin" class="pixel-button primary">GO!</button></div>
+        <p id="homeMessage" class="message">Find six friends. Or bring six very agreeable bots.</p>
+      </div>
+      <footer>© 2026 CASTLE DASH</footer>
+    </section>
+
+    <section id="lobby" class="screen lobby hidden">
+      <div class="screen-heading"><p class="eyebrow">THE GATHERING GLADE</p><h2>Find your<br><span>adventure pals.</span></h2></div>
+      <div class="lobby-scene"><canvas id="lobbyCanvas" aria-label="Castle map"></canvas></div>
+      <div class="room-board"><div class="room-code"><small>ROOM CODE</small><strong id="roomCodeDisplay">----</strong><button id="copyButton" aria-label="Copy invite link" title="Copy invite link">▣</button></div><p id="lobbyStatus">Waiting for the whole crew...</p><div id="playerList" class="player-list"></div><button id="startGameButton" class="pixel-button primary hidden">START JOURNEY</button></div>
+      <p class="lobby-help">Share the room code. Friends can join from anywhere.</p>
+    </section>
+
+    <section id="game" class="screen game hidden">
+      <header class="game-header"><div class="round-label"><small>ROOM <span id="roundNumber">1</span> / 5</small><strong id="roundTitle">The Courtyard</strong></div><div id="hearts" class="hearts" aria-label="3 shared hearts">♥ ♥ ♥</div><div class="timer-box"><small>ROOM TIME</small><strong id="timer">30</strong></div><button id="backLobbyButton" class="pixel-button back-lobby hidden">BACK TO LOBBY</button></header>
+      <p id="objectiveLine" class="objective-line"><b>OBJECTIVE</b> Talk to the signpost</p>
+      <p id="surprise" class="surprise">A tiny knight locked the gate, then misplaced the key. Classic knight behavior.</p>
+      <div class="game-layout"><div class="map-frame" id="mapFrame"><canvas id="mapCanvas" aria-label="Walkable top-down pixel-art world"></canvas><div class="map-label" id="mapLabel">THE COURTYARD</div><div class="game-toast" id="gameToast"></div></div>
+        <aside class="adventure-side"><div class="helper-actions"><button id="hintButton" class="hint-button" aria-label="Ask Hoot for a hint"><span aria-hidden="true" class="bulb-icon"></span> HINT <small id="hintStepLabel">1 / 3</small></button><button id="journalButton" class="pixel-button journal-button">CLUE JOURNAL</button><button id="helpObjectButton" class="help-object-button" aria-label="What does the nearby object do?">?</button></div><section class="clue-card"><div class="clue-top"><span>YOUR FIELD NOTES</span><b id="clueCharacter">●</b></div><p id="clueText">Explore and interact with signs to find clues.</p></section><p class="move-hint">WASD / ARROWS TO WALK<br>SPACE / E TO INTERACT</p><div id="testTools" class="test-tools hidden"><label for="testLevel">TEST ROOM</label><select id="testLevel"><option value="0">1. The Courtyard</option><option value="1">2. Mushroom Forest</option><option value="2">3. Broken Bridge</option><option value="3">4. Garden Gate</option><option value="4">5. Castle Gate</option></select><button id="testSkip" class="pixel-button">GO TO ROOM</button></div></aside></div>
+      <aside id="hootPanel" class="hoot-panel hidden" aria-live="polite"><span class="hoot-avatar" aria-hidden="true"></span><div class="hoot-copy"><b id="hootTitle">HOOT HAS A HINT</b><p id="hootText"></p><div class="hoot-actions"><button id="replayHint" class="pixel-button">REPLAY</button><button id="closeHint" class="pixel-button">CLOSE</button></div></div></aside>
+      <aside id="journalPanel" class="journal-panel hidden"><div class="journal-heading"><b>CLUE JOURNAL</b><button id="closeJournal" aria-label="Close journal">×</button></div><ul id="clueLog" class="clue-log"></ul><p id="emptyJournal">No clues yet. Explore and talk to the room!</p></aside>
+      <div class="touch-controls"><div id="joystick" class="joystick" aria-label="Movement joystick"><span id="joystickKnob"></span></div><button id="actionButton" class="action-button">ACTION</button></div>
+    </section>
+
+    <section id="resultOverlay" class="overlay hidden" aria-live="polite"><div class="result-card"><span id="resultStamp" class="result-stamp">NICE!</span><p id="resultText"></p><p class="trickster-reveal">The trickster was <strong id="tricksterName"></strong>!</p><small id="nextHint">Next crossroads in a moment...</small></div></section>
+    <section id="endOverlay" class="overlay hidden"><div class="result-card"><span id="endStamp" class="result-stamp">YOU MADE IT!</span><p id="endText"></p><button id="playAgain" class="pixel-button primary">TRY AGAIN</button><button id="endBackLobby" class="pixel-button">BACK TO LOBBY</button></div></section>
+    <section id="roomClearPanel" class="overlay hidden"><div class="result-card"><span class="result-stamp">COURTYARD CLEAR!</span><p id="roomStarRating" class="room-star-rating">3 / 3 stars</p><p>Hoot says you are ready for the castle. This test build stops here so you can review Room 1.</p><button id="roomClearBack" class="pixel-button primary">BACK TO LOBBY</button></div></section>
+    <section id="codePanel" class="overlay hidden"><div class="result-card code-card"><p class="eyebrow">CASTLE LOCK</p><h2>Enter the symbols</h2><div class="code-slots"><select id="codeOne" aria-label="First symbol"></select><select id="codeTwo" aria-label="Second symbol"></select><select id="codeThree" aria-label="Third symbol"></select></div><button id="submitCode" class="pixel-button primary">UNLOCK</button><button id="closeCode" class="pixel-button">CANCEL</button></div></section>
+  </main>
+  <script type="module" src="/firebase.js"></script>
+  <script src="/socket.io/socket.io.js"></script><script src="/levels.js"></script><script src="/game.js"></script>
+</body>
+</html>
